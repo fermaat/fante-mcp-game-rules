@@ -1,11 +1,12 @@
 [project]
-name = "package-name"
+name = "mcp-game-rules"
 version = "0.1.0"
-description = "Minimal Python package template"
+description = "MCP server exposing data-driven game rules (dice, checks, effects) for the Fante RPG and other Fante-stack games."
 readme = "README.md"
 requires-python = "==3.12.*"
 dependencies = [
-    "httpx>=0.25",
+    "mcp>=1.0",
+    "core-utils @ git+https://github.com/fermaat/core-utils.git",
     "pyyaml>=6.0.3",
     "loguru>=0.7",
     "pydantic>=2.0",
@@ -26,16 +27,6 @@ dev = [
 
 [tool.pdm]
 distribution = true
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py", "*_test.py"]
-addopts = "--strict-markers -v --cov=src --cov-report=term-missing --cov-report=html"
-asyncio_mode = "auto"
-markers = [
-    "unit: unit tests",
-    "integration: integration tests",
-]
 
 [tool.mypy]
 python_version = "3.12"
@@ -59,6 +50,14 @@ disallow_incomplete_defs = false
 
 [[tool.mypy.overrides]]
 module = "yaml.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "mcp.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "core_utils.*"
 ignore_missing_imports = true
 
 [tool.black]
@@ -85,7 +84,7 @@ extend-select = ["E", "W", "F", "I", "C4", "B", "UP", "SIM"]
 ignore = ["E501", "E203"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["package_name"]
+known-first-party = ["mcp_game_rules"]
 
 [tool.coverage.run]
 source = ["src"]

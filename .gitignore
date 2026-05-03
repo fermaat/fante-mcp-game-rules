@@ -41,3 +41,5 @@ logs/*.log
 .vscode/
 *.swp
 *.swo
+.claude/
+docs/
