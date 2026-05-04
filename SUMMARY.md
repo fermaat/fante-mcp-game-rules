@@ -103,7 +103,7 @@ Dev: `pytest`, `pytest-cov`, `pytest-asyncio`, `black`, `ruff`, `mypy`, `isort`,
 - **Phase 1** ✓ Domain models, protocols, dice engine, unit tests (53 assertions, all green)
 - **Phase 2** ✓ YAML loader, condition engine, checker, built-in packs (94 tests total, all green)
 - **Phase 3** ✓ MCP stdio server (`server.py`, `__main__.py`) — 99 tests total (5 integration)
-- **Phase 4** — ecosystem update (repos_index, fante-game-orchestrator unblock)
+- **Phase 4** ✓ SUMMARY.md + ecosystem update (repos_index flipped, orchestrator Phase 2 unblocked)
 
 ## Consumers / upstream
 
