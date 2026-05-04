@@ -1,8 +1,12 @@
+from mcp_game_rules.config import Settings
 from mcp_game_rules.domain.actor import Actor
 from mcp_game_rules.domain.dice import DicePolicy
 from mcp_game_rules.domain.pack import Rule, RulePack
 from mcp_game_rules.domain.results import CheckResult, RollResult
+from mcp_game_rules.engine.checker import SystemChecker
+from mcp_game_rules.engine.dice import SystemDice
 from mcp_game_rules.engine.format import pretty_rule
+from mcp_game_rules.packs.loader import load_builtin_packs, load_packs
 from mcp_game_rules.protocols import CheckResolver, DiceRoller
 
 
@@ -15,8 +19,10 @@ class CompositeRuleEngine:
     ) -> None:
         self._dice = dice
         self._checker = checker
+        self._packs: dict[str, RulePack] = {}
         self._index: dict[str, tuple[RulePack, Rule]] = {}
         for pack in packs:
+            self._packs[pack.pack_name] = pack
             for rule in pack.rules:
                 if rule.id in self._index:
                     existing = self._index[rule.id][0]
@@ -25,6 +31,21 @@ class CompositeRuleEngine:
                         f"'{existing.pack_name}' and '{pack.pack_name}'"
                     )
                 self._index[rule.id] = (pack, rule)
+
+    @classmethod
+    def from_settings(cls, settings: Settings | None = None) -> "CompositeRuleEngine":
+        cfg = settings or Settings()
+        dice = SystemDice()
+        checker = SystemChecker(dice)
+        packs: list[RulePack] = []
+        if cfg.autoload_builtin:
+            packs.extend(load_builtin_packs())
+        for path in cfg.extra_pack_paths:
+            packs.extend(load_packs(path))
+        return cls(packs, dice, checker)
+
+    def loaded_packs(self) -> dict[str, RulePack]:
+        return dict(self._packs)
 
     def roll(self, spec: str) -> RollResult:
         return self._dice.roll_spec(spec)

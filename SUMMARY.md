@@ -9,8 +9,9 @@ so Fernando's son can play a growing RPG with rules that dad can extend by editi
 
 ```
 src/mcp_game_rules/
-├── __init__.py                 # version + public re-exports (Phase 3)
-├── __main__.py                 # `python -m mcp_game_rules` → boot stdio server (Phase 3)
+├── __init__.py                 # version + public re-exports
+├── __main__.py                 # `python -m mcp_game_rules` → boot stdio server
+├── server.py                   # FastMCP server: 4 tools + rule-pack resource template
 ├── config.py                   # Settings (extra_pack_paths, autoload_builtin)
 ├── protocols.py                # DiceRoller, CheckResolver, RuleEngine (Protocol classes)
 ├── domain/
@@ -26,7 +27,7 @@ src/mcp_game_rules/
 │   ├── format.py               # pretty_rule(rule, pack_default_policy) → str
 │   ├── conditions.py           # evaluate(condition, scope) → bool  [Phase 2]
 │   ├── checker.py              # SystemChecker — resolves check against a rule  [Phase 2]
-│   └── composite.py            # CompositeRuleEngine — owns loaded packs  [Phase 2]
+│   └── composite.py            # CompositeRuleEngine — owns loaded packs; from_settings() factory
 └── packs/
     ├── loader.py               # load_pack / load_packs / load_builtin_packs  [Phase 2]
     └── builtin/
@@ -38,7 +39,7 @@ tests/
 ├── conftest.py                 # ENV setup, FakeRng (deterministic dice)
 ├── unit/                       # Phase 1 tests (53 assertions, all passing)
 ├── functional/                 # Phase 2 tests — loader, checker, composite  [Phase 2]
-└── integration/                # Phase 3 — spawns real MCP subprocess
+└── integration/                # Phase 3 ✓ — spawns real MCP subprocess (5 tests)
 ```
 
 ## Key classes / functions
@@ -57,7 +58,7 @@ tests/
 | `SystemDice` | `engine/dice.py` | `roll_spec(spec)`, `execute_policy(policy)` — injectable RNG |
 | `pretty_rule` | `engine/format.py` | Human-readable rule dump for logs and `describe_rule` |
 
-## Main entry points (once Phase 3 is done)
+## Main entry points
 
 ```python
 from mcp_game_rules import CompositeRuleEngine, Actor, Attributes, Attribute, DicePolicy
@@ -101,9 +102,8 @@ Dev: `pytest`, `pytest-cov`, `pytest-asyncio`, `black`, `ruff`, `mypy`, `isort`,
 - **Phase 0** ✓ Bootstrap — deps, tooling, plan locked
 - **Phase 1** ✓ Domain models, protocols, dice engine, unit tests (53 assertions, all green)
 - **Phase 2** ✓ YAML loader, condition engine, checker, built-in packs (94 tests total, all green)
-- **Phase 3** — MCP stdio server (`server.py`, `__main__.py`) ← **NEXT**
-- **Phase 3** — MCP stdio server (`server.py`, `__main__.py`)
-- **Phase 4** — SUMMARY.md + ecosystem update
+- **Phase 3** ✓ MCP stdio server (`server.py`, `__main__.py`) — 99 tests total (5 integration)
+- **Phase 4** — ecosystem update (repos_index, fante-game-orchestrator unblock)
 
 ## Consumers / upstream
 
