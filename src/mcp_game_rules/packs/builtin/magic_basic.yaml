@@ -1,0 +1,61 @@
+schema_version: 1
+pack_name: magic_basic
+pack_version: "0.1.0"
+domain: magical
+complexity_tier: 2
+description: Basic magic spells and arcane actions.
+default_dice_policy:
+  d20s: 1
+  keep: highest
+  plot_dice: 1
+skills:
+  focus: willpower
+  arcana: intellect
+rules:
+  - id: spark_of_light
+    description: Conjure a small spark of magical light.
+    attribute: willpower
+    skill: focus
+    base_difficulty: 8
+    modifiers:
+      - when:
+          field: context.area
+          op: eq
+          value: dark
+        delta: 2
+        reason: darkness sharpens the will to summon light
+    on_success: "A warm spark blooms in your palm."
+    on_failure: "Your focus slips; nothing appears."
+    complexity_tier: 2
+
+  - id: mend_small_thing
+    description: Mend a small broken object with arcane focus.
+    attribute: intellect
+    skill: arcana
+    base_difficulty: 10
+    modifiers:
+      - when:
+          field: context.object_size
+          op: eq
+          value: tiny
+        delta: 3
+        reason: tiny objects are easier to mend
+    on_success: "The cracks seal themselves shut."
+    on_failure: "The pieces resist your magic."
+    complexity_tier: 2
+
+  - id: push_with_will
+    description: Push a small object with pure willpower.
+    attribute: willpower
+    skill: focus
+    base_difficulty: 12
+    modifiers:
+      - when:
+          field: actor.attributes.willpower
+          op: gte
+          value: 3
+        delta: 2
+        reason: strong will amplifies the push
+    on_success: "The object slides across the surface."
+    on_failure: "The object stays put."
+    complexity_tier: 2

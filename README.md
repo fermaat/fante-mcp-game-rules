@@ -29,10 +29,11 @@ in the orchestrator repo.
 
 ## Status
 
-**Phase 0 — bootstrap.** Package renamed, deps declared, implementation plan
-locked in `docs/IMPLEMENTATION_PLAN.md`. No domain code yet.
+**Phase 2 complete.** Domain models, dice engine, condition evaluator, YAML loader,
+`SystemChecker`, `CompositeRuleEngine`, and three built-in packs are in place.
+94 tests, all green. See `docs/IMPLEMENTATION_PLAN.md` for the full phased plan.
 
-See `docs/IMPLEMENTATION_PLAN.md` for the phased build-out.
+**Next:** Phase 3 — MCP stdio server (`server.py`, `__main__.py`).
 
 ## Quick start (once Phase 1+ are done)
 
@@ -44,12 +45,19 @@ pdm run python -m mcp_game_rules           # boot the MCP server on stdio
 
 ## Repository layout
 
-Until Phase 1 lands, the tree is just the template skeleton:
-
 ```
-src/mcp_game_rules/   # package (currently a placeholder __init__.py)
-tests/                # unit/ and integration/ subfolders
-docs/IMPLEMENTATION_PLAN.md
+src/mcp_game_rules/
+├── config.py                  # Settings (extra_pack_paths, autoload_builtin)
+├── protocols.py               # DiceRoller, CheckResolver, RuleEngine protocols
+├── domain/                    # Pydantic models — Actor, Attributes, DicePolicy, Rule, RulePack …
+├── engine/                    # dice.py, conditions.py, checker.py, composite.py, format.py
+└── packs/
+    ├── loader.py              # load_pack / load_packs / load_builtin_packs
+    └── builtin/               # physics_basic.yaml, magic_basic.yaml, environment_forest.yaml
+tests/
+├── unit/                      # 53 assertions — attributes, dice, conditions, format, packs
+└── functional/                # 16 assertions — loader, checker, composite
+docs/
+├── IMPLEMENTATION_PLAN.md
+└── PACK_AUTHORING.md          # how to write a YAML rule pack
 ```
-
-The target tree is documented in the implementation plan.

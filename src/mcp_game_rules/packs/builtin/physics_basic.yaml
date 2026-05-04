@@ -1,0 +1,81 @@
+schema_version: 1
+pack_name: physics_basic
+pack_version: "0.1.0"
+domain: physical
+complexity_tier: 1
+description: Basic physical actions — climbing, dodging, swimming, lifting.
+default_dice_policy:
+  d20s: 1
+  keep: highest
+  plot_dice: 0
+skills:
+  athletics: strength
+  acrobatics: speed
+  endurance: willpower
+rules:
+  - id: climb
+    description: Attempt to climb a rocky surface.
+    attribute: strength
+    skill: athletics
+    base_difficulty: 10
+    modifiers:
+      - when:
+          field: context.surface
+          op: eq
+          value: wet
+        delta: 5
+        reason: wet surface grip
+    on_success: "You scramble up with effort."
+    on_failure: "You slip and fall back down."
+    complexity_tier: 1
+
+  - id: dodge_falling_rocks
+    description: Dodge a shower of falling rocks.
+    attribute: speed
+    skill: acrobatics
+    base_difficulty: 12
+    dice_policy:
+      d20s: 2
+      keep: lowest
+      plot_dice: 0
+    modifiers:
+      - when:
+          field: actor.tags
+          op: contains
+          value: heavy_armor
+        delta: -2
+        reason: heavy armor restricts movement
+    on_success: "You roll clear of the rocks."
+    on_failure: "A rock strikes you square on the shoulder."
+    complexity_tier: 1
+
+  - id: swim_short
+    description: Swim a short distance through open water.
+    attribute: strength
+    skill: endurance
+    base_difficulty: 8
+    modifiers:
+      - when:
+          field: context.current
+          op: eq
+          value: strong
+        delta: -3
+        reason: strong current makes swimming harder
+    on_success: "You make it across with steady strokes."
+    on_failure: "The water pulls you back."
+    complexity_tier: 1
+
+  - id: lift_heavy
+    description: Lift a heavy object overhead.
+    attribute: strength
+    base_difficulty: 14
+    modifiers:
+      - when:
+          field: actor.attributes.strength
+          op: gte
+          value: 5
+        delta: 3
+        reason: exceptional strength gives extra leverage
+    on_success: "You hoist the weight overhead."
+    on_failure: "The object barely budges."
+    complexity_tier: 1

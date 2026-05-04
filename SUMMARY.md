@@ -100,7 +100,8 @@ Dev: `pytest`, `pytest-cov`, `pytest-asyncio`, `black`, `ruff`, `mypy`, `isort`,
 
 - **Phase 0** ✓ Bootstrap — deps, tooling, plan locked
 - **Phase 1** ✓ Domain models, protocols, dice engine, unit tests (53 assertions, all green)
-- **Phase 2** — YAML loader, condition engine, checker, built-in packs ← **NEXT**
+- **Phase 2** ✓ YAML loader, condition engine, checker, built-in packs (94 tests total, all green)
+- **Phase 3** — MCP stdio server (`server.py`, `__main__.py`) ← **NEXT**
 - **Phase 3** — MCP stdio server (`server.py`, `__main__.py`)
 - **Phase 4** — SUMMARY.md + ecosystem update
 

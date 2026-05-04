@@ -1,0 +1,62 @@
+schema_version: 1
+pack_name: environment_forest
+pack_version: "0.1.0"
+domain: environmental
+complexity_tier: 1
+description: Forest survival and navigation challenges.
+default_dice_policy:
+  d20s: 1
+  keep: highest
+  plot_dice: 0
+skills:
+  survival: awareness
+  tracking: awareness
+rules:
+  - id: find_path
+    description: Find a safe path through the forest.
+    attribute: awareness
+    skill: survival
+    base_difficulty: 10
+    modifiers:
+      - when:
+          field: context.weather
+          op: eq
+          value: foggy
+        delta: -3
+        reason: fog obscures landmarks
+    on_success: "You spot a deer trail leading the right way."
+    on_failure: "The trees all look the same."
+    complexity_tier: 1
+
+  - id: forage_berries
+    description: Forage for edible berries.
+    attribute: awareness
+    skill: survival
+    base_difficulty: 8
+    modifiers:
+      - when:
+          field: context.season
+          op: in
+          value:
+            - summer
+            - autumn
+        delta: 2
+        reason: ripe season makes berries easier to find
+    on_success: "You find a handful of ripe red berries."
+    on_failure: "You come up empty-handed."
+    complexity_tier: 1
+
+  - id: read_weather
+    description: Read the signs to predict tomorrow's weather.
+    attribute: awareness
+    base_difficulty: 12
+    modifiers:
+      - when:
+          field: actor.skills.survival
+          op: gte
+          value: 2
+        delta: 3
+        reason: survival experience aids weather reading
+    on_success: "You sense a storm coming before nightfall."
+    on_failure: "The sky gives you no clear signs."
+    complexity_tier: 1
