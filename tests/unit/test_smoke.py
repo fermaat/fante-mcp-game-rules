@@ -10,4 +10,4 @@ import mcp_game_rules
 
 @pytest.mark.unit
 def test_package_imports() -> None:
-    assert mcp_game_rules.__version__ == "0.1.0"
+    assert mcp_game_rules.__version__ == "0.2.0"

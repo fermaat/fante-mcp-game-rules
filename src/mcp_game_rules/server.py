@@ -24,16 +24,19 @@ def check(
     actor: dict[str, Any],
     context: dict[str, Any] | None = None,
     dice_override: dict[str, Any] | None = None,
+    player_score: int | None = None,
 ) -> dict[str, Any]:
     """Resolve an action check for an actor against a rule.
 
     actor: Actor serialised as a dict (use Actor.model_dump()).
     context: optional situational key/value pairs (e.g. {"surface": "wet"}).
     dice_override: optional DicePolicy serialised as a dict.
+    player_score: if provided, replaces the d20 roll with this value (skill mode).
+        Plot dice still roll per policy. d20_rolls in the result will be empty.
     """
     actor_obj = Actor.model_validate(actor)
     policy = DicePolicy.model_validate(dice_override) if dice_override else None
-    return _engine.check(rule_id, actor_obj, context or {}, policy).model_dump()
+    return _engine.check(rule_id, actor_obj, context or {}, policy, player_score).model_dump()
 
 
 @mcp.tool()

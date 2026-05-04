@@ -56,12 +56,13 @@ class CompositeRuleEngine:
         actor: Actor,
         context: dict[str, object],
         dice_override: DicePolicy | None = None,
+        player_score: int | None = None,
     ) -> CheckResult:
         if rule_id not in self._index:
             raise KeyError(f"Rule '{rule_id}' not found in loaded packs")
         pack, rule = self._index[rule_id]
         result = self._checker.resolve(
-            rule, actor, context, pack.default_dice_policy, dice_override
+            rule, actor, context, pack.default_dice_policy, dice_override, player_score
         )
         return result.model_copy(update={"pack_name": pack.pack_name})
 

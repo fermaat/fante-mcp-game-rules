@@ -82,6 +82,29 @@ async def test_check_climb() -> None:
     )
 
 
+async def test_check_climb_with_player_score() -> None:
+    async with stdio_client(_SERVER_PARAMS) as (read, write):
+        async with ClientSession(read, write) as s:
+            await s.initialize()
+            result = await s.call_tool(
+                "check",
+                {
+                    "rule_id": "climb",
+                    "actor": _ACTOR.model_dump(),
+                    "context": {"surface": "wet"},
+                    "player_score": 14,
+                },
+            )
+    assert not result.isError
+    data: dict[str, Any] = result.structuredContent  # type: ignore[assignment]
+    assert data["d20_rolls"] == []
+    assert data["kept_roll"] == 14
+    assert data["situational_modifier"] == 5
+    # 14 (score) + 3 (str) + 1 (athletics) + 5 (wet) = 23
+    assert data["total"] == 23
+    assert data["success"] is True
+
+
 async def test_read_resource_physics_pack() -> None:
     async with stdio_client(_SERVER_PARAMS) as (read, write):
         async with ClientSession(read, write) as s:

@@ -104,6 +104,7 @@ Dev: `pytest`, `pytest-cov`, `pytest-asyncio`, `black`, `ruff`, `mypy`, `isort`,
 - **Phase 2** ✓ YAML loader, condition engine, checker, built-in packs (94 tests total, all green)
 - **Phase 3** ✓ MCP stdio server (`server.py`, `__main__.py`) — 99 tests total (5 integration)
 - **Phase 4** ✓ SUMMARY.md + ecosystem update (repos_index flipped, orchestrator Phase 2 unblocked)
+- **v0.2.0** ✓ Skill mode: `check(..., player_score=int)` bypasses the d20 with a player-provided score. Plot dice still roll. 104 tests total.
 
 ## Consumers / upstream
 

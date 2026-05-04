@@ -17,11 +17,17 @@ class SystemChecker:
         context: dict[str, object],
         pack_default_policy: DicePolicy,
         dice_override: DicePolicy | None = None,
+        player_score: int | None = None,
     ) -> CheckResult:
         policy = dice_override or rule.dice_policy or pack_default_policy
         scope: dict[str, object] = {"actor": actor.model_dump(), "context": context}
 
-        d20_rolls, kept_roll, plot_faces = self._dice.execute_policy(policy)
+        if player_score is not None:
+            d20_rolls: list[int] = []
+            kept_roll = player_score
+            plot_faces = self._dice.roll_plot_dice(policy.plot_dice)
+        else:
+            d20_rolls, kept_roll, plot_faces = self._dice.execute_policy(policy)
 
         attribute_bonus = actor.attributes.get(rule.attribute) if rule.attribute else 0
         skill_bonus = actor.skills.get(rule.skill, 0) if rule.skill else 0

@@ -79,3 +79,19 @@ def test_pack_name_set_on_check_result():
     actor = Actor(name="Test")
     result = engine.check("climb", actor, {})
     assert result.pack_name == "physics_basic"
+
+
+@pytest.mark.functional
+def test_engine_check_passes_player_score_through():
+    from mcp_game_rules.domain.actor import Actor
+    from tests.conftest import FakeRng
+
+    dice = SystemDice(FakeRng([]))  # no d20 should be drawn
+    checker = SystemChecker(dice)
+    engine = CompositeRuleEngine(load_builtin_packs(), dice, checker)
+    actor = Actor(name="Fante")
+    result = engine.check("climb", actor, {}, player_score=18)
+
+    assert result.pack_name == "physics_basic"
+    assert result.d20_rolls == []
+    assert result.kept_roll == 18

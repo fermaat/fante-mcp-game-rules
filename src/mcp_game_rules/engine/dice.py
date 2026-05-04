@@ -51,5 +51,8 @@ class SystemDice:
             kept = min(d20_rolls)
         else:
             kept = sum(d20_rolls)
-        plot_faces = [_plot_face(self._rng.randint(1, 6)) for _ in range(policy.plot_dice)]
+        plot_faces = self.roll_plot_dice(policy.plot_dice)
         return d20_rolls, kept, plot_faces
+
+    def roll_plot_dice(self, count: int) -> list[PlotDieFace]:
+        return [_plot_face(self._rng.randint(1, 6)) for _ in range(count)]

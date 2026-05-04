@@ -13,6 +13,10 @@ class DiceRoller(Protocol):
         """Returns (d20_rolls, kept_roll, plot_dice_faces)."""
         ...
 
+    def roll_plot_dice(self, count: int) -> list[PlotDieFace]:
+        """Roll only plot dice — used when the d20 is replaced by a player_score."""
+        ...
+
 
 class CheckResolver(Protocol):
     def resolve(
@@ -22,6 +26,7 @@ class CheckResolver(Protocol):
         context: dict[str, object],
         pack_default_policy: DicePolicy,
         dice_override: DicePolicy | None = None,
+        player_score: int | None = None,
     ) -> CheckResult: ...
 
 
@@ -34,6 +39,7 @@ class RuleEngine(Protocol):
         actor: Actor,
         context: dict[str, object],
         dice_override: DicePolicy | None = None,
+        player_score: int | None = None,
     ) -> CheckResult: ...
 
     def describe_rule(self, rule_id: str) -> str: ...

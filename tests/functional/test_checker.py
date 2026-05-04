@@ -68,3 +68,47 @@ def test_disadvantage_keep_lowest(physics_pack, fante):
 
     assert result.d20_rolls == [18, 4]
     assert result.kept_roll == 4
+
+
+@pytest.mark.functional
+def test_player_score_replaces_d20_roll(physics_pack, fante):
+    climb = next(r for r in physics_pack.rules if r.id == "climb")
+    # FakeRng would be exhausted if any d20 were rolled — sequence has no values
+    checker = SystemChecker(SystemDice(FakeRng([])))
+    result = checker.resolve(climb, fante, {}, physics_pack.default_dice_policy, player_score=14)
+
+    assert result.d20_rolls == []
+    assert result.kept_roll == 14
+    assert result.attribute_bonus == 2
+    assert result.skill_bonus == 1
+    assert result.total == 17  # 14 + 2 + 1
+    assert result.success is True
+
+
+@pytest.mark.functional
+def test_player_score_still_applies_situational_modifiers(physics_pack, fante):
+    climb = next(r for r in physics_pack.rules if r.id == "climb")
+    checker = SystemChecker(SystemDice(FakeRng([])))
+    result = checker.resolve(
+        climb,
+        fante,
+        {"surface": "wet"},
+        physics_pack.default_dice_policy,
+        player_score=8,
+    )
+
+    assert result.d20_rolls == []
+    assert result.kept_roll == 8
+    assert result.situational_modifier == 5
+    assert result.total == 16  # 8 + 2 + 1 + 5
+
+
+@pytest.mark.functional
+def test_player_score_failure_below_dc(physics_pack, fante):
+    climb = next(r for r in physics_pack.rules if r.id == "climb")
+    checker = SystemChecker(SystemDice(FakeRng([])))
+    result = checker.resolve(climb, fante, {}, physics_pack.default_dice_policy, player_score=2)
+
+    assert result.success is False
+    assert result.total == 5  # 2 + 2 + 1
+    assert result.narration_seed == "You slip and fall back down."

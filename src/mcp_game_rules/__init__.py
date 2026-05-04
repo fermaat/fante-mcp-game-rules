@@ -1,6 +1,6 @@
 """mcp-game-rules — MCP server exposing data-driven game rules for the Fante RPG."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from mcp_game_rules.domain.actor import Actor
 from mcp_game_rules.domain.attributes import Attribute, Attributes
