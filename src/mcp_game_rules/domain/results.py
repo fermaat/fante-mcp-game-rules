@@ -32,3 +32,4 @@ class CheckResult(BaseModel):
     plot_dice: list[PlotDieFace]
     applied_modifiers: list[AppliedModifier]
     narration_seed: str | None
+    knowledge_topic: str | None = None

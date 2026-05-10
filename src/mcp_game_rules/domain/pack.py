@@ -24,6 +24,7 @@ class Rule(BaseModel):
     on_success: str | None = None
     on_failure: str | None = None
     complexity_tier: int = Field(1, ge=1, le=5)
+    knowledge_topic: str | None = None
 
 
 class RulePack(BaseModel):

@@ -55,4 +55,5 @@ class SystemChecker:
             plot_dice=plot_faces,
             applied_modifiers=applied,
             narration_seed=rule.on_success if success else rule.on_failure,
+            knowledge_topic=rule.knowledge_topic,
         )
