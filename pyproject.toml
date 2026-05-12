@@ -1,6 +1,14 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.build]
+includes = ["src/mcp_game_rules"]
+package-dir = "src"
+
 [project]
 name = "mcp-game-rules"
-version = "0.3.0"
+version = "0.3.1"
 description = "MCP server exposing data-driven game rules (dice, checks, effects) for the Fante RPG and other Fante-stack games."
 readme = "README.md"
 requires-python = "==3.12.*"
