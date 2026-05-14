@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 from mcp_game_rules.domain.dice import PlotDieFace
+from mcp_game_rules.domain.pack import ChallengeCategory, ChallengeKind
 
 
 class RollResult(BaseModel):
@@ -33,3 +34,5 @@ class CheckResult(BaseModel):
     applied_modifiers: list[AppliedModifier]
     narration_seed: str | None
     knowledge_topic: str | None = None
+    challenge: ChallengeKind = "none"
+    challenge_category: ChallengeCategory | None = None

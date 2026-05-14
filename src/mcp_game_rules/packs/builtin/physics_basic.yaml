@@ -18,6 +18,9 @@ rules:
     attribute: strength
     skill: athletics
     base_difficulty: 10
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: physical
     modifiers:
       - when:
           field: context.surface
@@ -28,7 +31,6 @@ rules:
     on_success: "You scramble up with effort."
     on_failure: "You slip and fall back down."
     complexity_tier: 1
-    knowledge_topic: adventure
 
   - id: dodge_falling_rocks
     description: Dodge a shower of falling rocks.

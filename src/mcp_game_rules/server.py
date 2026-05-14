@@ -46,6 +46,28 @@ def describe_rule(rule_id: str) -> str:
 
 
 @mcp.tool()
+def get_rule_meta(rule_id: str) -> dict[str, Any]:
+    """Return structured metadata about a rule without resolving a check.
+
+    Fields returned: rule_id, pack_name, attribute, skill, base_difficulty,
+    knowledge_topic, challenge, challenge_category.
+    """
+    if rule_id not in _engine._index:
+        raise KeyError(f"Rule '{rule_id}' not found in loaded packs")
+    pack, rule = _engine._index[rule_id]
+    return {
+        "rule_id": rule.id,
+        "pack_name": pack.pack_name,
+        "attribute": rule.attribute,
+        "skill": rule.skill,
+        "base_difficulty": rule.base_difficulty,
+        "knowledge_topic": rule.knowledge_topic,
+        "challenge": rule.challenge,
+        "challenge_category": rule.challenge_category,
+    }
+
+
+@mcp.tool()
 def list_rules() -> list[str]:
     """Return all rule IDs available across loaded packs."""
     return _engine.list_rules()

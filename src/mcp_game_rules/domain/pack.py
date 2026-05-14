@@ -1,5 +1,8 @@
 from typing import Literal, Self
 
+ChallengeKind = Literal["none", "optional", "required"]
+ChallengeCategory = Literal["physical", "mental", "reflexes", "language", "memory"]
+
 from pydantic import BaseModel, Field, model_validator
 
 from mcp_game_rules.domain.attributes import Attribute
@@ -25,6 +28,8 @@ class Rule(BaseModel):
     on_failure: str | None = None
     complexity_tier: int = Field(1, ge=1, le=5)
     knowledge_topic: str | None = None
+    challenge: ChallengeKind = "none"
+    challenge_category: ChallengeCategory | None = None
 
 
 class RulePack(BaseModel):

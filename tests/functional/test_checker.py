@@ -42,10 +42,10 @@ def test_wet_surface_modifier_fires(physics_pack, fante):
     checker = SystemChecker(SystemDice(FakeRng([15])))
     result = checker.resolve(climb, fante, {"surface": "wet"}, physics_pack.default_dice_policy)
 
-    assert result.situational_modifier == 5
+    assert result.situational_modifier == -5
     assert len(result.applied_modifiers) == 1
-    assert result.applied_modifiers[0].delta == 5
-    assert result.success is True
+    assert result.applied_modifiers[0].delta == -5
+    assert result.success is True  # 15 + 2 + 1 - 5 = 13 >= 10
     assert result.narration_seed == "You scramble up with effort."
 
 
@@ -99,8 +99,8 @@ def test_player_score_still_applies_situational_modifiers(physics_pack, fante):
 
     assert result.d20_rolls == []
     assert result.kept_roll == 8
-    assert result.situational_modifier == 5
-    assert result.total == 16  # 8 + 2 + 1 + 5
+    assert result.situational_modifier == -5
+    assert result.total == 6  # 8 + 2 + 1 - 5
 
 
 @pytest.mark.functional

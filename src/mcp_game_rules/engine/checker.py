@@ -56,4 +56,6 @@ class SystemChecker:
             applied_modifiers=applied,
             narration_seed=rule.on_success if success else rule.on_failure,
             knowledge_topic=rule.knowledge_topic,
+            challenge=rule.challenge,
+            challenge_category=rule.challenge_category,
         )
