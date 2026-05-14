@@ -23,7 +23,7 @@ rules:
           field: context.surface
           op: eq
           value: wet
-        delta: 5
+        delta: -5
         reason: wet surface grip
     on_success: "You scramble up with effort."
     on_failure: "You slip and fall back down."
