@@ -8,7 +8,7 @@ package-dir = "src"
 
 [project]
 name = "mcp-game-rules"
-version = "0.3.1"
+version = "0.3.2"
 description = "MCP server exposing data-driven game rules (dice, checks, effects) for the Fante RPG and other Fante-stack games."
 readme = "README.md"
 requires-python = "==3.12.*"
