@@ -17,6 +17,9 @@ rules:
     attribute: willpower
     skill: focus
     base_difficulty: 8
+    knowledge_topic: lore
+    challenge: optional
+    challenge_category: mental
     modifiers:
       - when:
           field: context.area
@@ -33,6 +36,9 @@ rules:
     attribute: intellect
     skill: arcana
     base_difficulty: 10
+    knowledge_topic: lore
+    challenge: optional
+    challenge_category: mental
     modifiers:
       - when:
           field: context.object_size
@@ -49,6 +55,9 @@ rules:
     attribute: willpower
     skill: focus
     base_difficulty: 12
+    knowledge_topic: lore
+    challenge: optional
+    challenge_category: mental
     modifiers:
       - when:
           field: actor.attributes.willpower

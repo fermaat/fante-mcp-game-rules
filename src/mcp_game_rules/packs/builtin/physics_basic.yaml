@@ -37,6 +37,9 @@ rules:
     attribute: speed
     skill: acrobatics
     base_difficulty: 12
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: reflexes
     dice_policy:
       d20s: 2
       keep: lowest
@@ -57,6 +60,9 @@ rules:
     attribute: strength
     skill: endurance
     base_difficulty: 8
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: physical
     modifiers:
       - when:
           field: context.current
@@ -72,6 +78,9 @@ rules:
     description: Lift a heavy object overhead.
     attribute: strength
     base_difficulty: 14
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: physical
     modifiers:
       - when:
           field: actor.attributes.strength
@@ -81,4 +90,71 @@ rules:
         reason: exceptional strength gives extra leverage
     on_success: "You hoist the weight overhead."
     on_failure: "The object barely budges."
+    complexity_tier: 1
+
+  - id: jump
+    description: Jump over an obstacle or gap.
+    attribute: speed
+    skill: acrobatics
+    base_difficulty: 10
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: reflexes
+    modifiers:
+      - when:
+          field: context.distance
+          op: eq
+          value: long
+        delta: -3
+        reason: long distance is harder
+    on_success: "You leap clean across."
+    on_failure: "Your foot misses — you fall short."
+    complexity_tier: 1
+
+  - id: grab
+    description: Grab something just within reach.
+    attribute: speed
+    skill: acrobatics
+    base_difficulty: 11
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: reflexes
+    modifiers:
+      - when:
+          field: context.moving
+          op: eq
+          value: true
+        delta: -2
+        reason: moving target is trickier
+    on_success: "Your fingers close around it just in time."
+    on_failure: "It slips away."
+    complexity_tier: 1
+
+  - id: push
+    description: Push a heavy object out of the way.
+    attribute: strength
+    base_difficulty: 11
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: physical
+    modifiers:
+      - when:
+          field: context.weight
+          op: eq
+          value: heavy
+        delta: -3
+        reason: very heavy object
+    on_success: "You shove it aside with a grunt."
+    on_failure: "It barely moves — too heavy."
+    complexity_tier: 1
+
+  - id: pull
+    description: Pull a rope or lever towards you.
+    attribute: strength
+    base_difficulty: 10
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: physical
+    on_success: "You yank it free."
+    on_failure: "It resists, then snaps back."
     complexity_tier: 1

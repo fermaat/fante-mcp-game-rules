@@ -17,6 +17,9 @@ rules:
     attribute: awareness
     skill: survival
     base_difficulty: 10
+    knowledge_topic: lore
+    challenge: optional
+    challenge_category: mental
     modifiers:
       - when:
           field: context.weather
@@ -59,4 +62,68 @@ rules:
         reason: survival experience aids weather reading
     on_success: "You sense a storm coming before nightfall."
     on_failure: "The sky gives you no clear signs."
+    complexity_tier: 1
+
+  - id: hide
+    description: Hide from sight in the surroundings.
+    attribute: awareness
+    base_difficulty: 11
+    knowledge_topic: adventure
+    challenge: optional
+    challenge_category: reflexes
+    modifiers:
+      - when:
+          field: context.light
+          op: eq
+          value: dark
+        delta: 2
+        reason: darkness helps you blend in
+      - when:
+          field: context.light
+          op: eq
+          value: bright
+        delta: -2
+        reason: bright light makes hiding harder
+    on_success: "You melt into the shadows. Nothing sees you."
+    on_failure: "Your foot snaps a twig — you're spotted."
+    complexity_tier: 1
+
+  - id: search
+    description: Search the area for something hidden or useful.
+    attribute: awareness
+    base_difficulty: 10
+    knowledge_topic: lore
+    challenge: optional
+    challenge_category: mental
+    modifiers:
+      - when:
+          field: context.light
+          op: eq
+          value: dark
+        delta: -2
+        reason: hard to see in the dark
+    on_success: "Something glints under the leaves — you found it."
+    on_failure: "Nothing unusual catches your eye."
+    complexity_tier: 1
+
+  - id: listen
+    description: Listen carefully for sounds in the environment.
+    attribute: awareness
+    base_difficulty: 9
+    knowledge_topic: lore
+    challenge: optional
+    challenge_category: mental
+    on_success: "A soft sound drifts from the left — you hear it clearly."
+    on_failure: "Only the wind. Whatever was there is silent now."
+    complexity_tier: 1
+
+  - id: call
+    description: Call out to someone or something in the distance.
+    attribute: presence
+    base_difficulty: 10
+    knowledge_topic: languages
+    challenge: optional
+    challenge_category: language
+    on_success: "A voice answers from somewhere ahead."
+    on_failure: "Only your own echo comes back."
     complexity_tier: 1
